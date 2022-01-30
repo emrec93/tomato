@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// CLoud Translate API
+// CLoud Translate API, credentials obtained from Google Cloud Platform - REQUIRES BILLING
 const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
 
 // Configuration
@@ -38,11 +38,11 @@ const detectLanguage = async (text) => {
     ) {
       return { hashtag: "" };
     }
-    let response = await translate.detect(text); // Detect the language from the FE/Client
+    let response = await translate.detect(text); // Detect the language from the client side
     let rawTranslation = await translate.translate("Tomato", response[0].language); // Translate 'Tomato' into the detected language
     let tomato = rawTranslation[0]; // Tidy the data
     let translatedTomato = "#" + tomato; // Prepend #
-    return { hashtag: translatedTomato }; // Return as an object for the FE to use
+    return { hashtag: translatedTomato }; // Return as an object for the front end
   } catch (error) {
     if (text !== "") {
       console.log(`An error has occured: ${error}`);
@@ -52,6 +52,7 @@ const detectLanguage = async (text) => {
 };
 
 app.post("/api/translate", async (req, res) => {
+  //Post requests made to /api/translate
   let tweet = req.body.tweet;
   let data = await detectLanguage(tweet);
   res.json(data);

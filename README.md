@@ -14,14 +14,3 @@ A simple React App with an Express server designed to return a tweet with '#Toma
  - The output will be no more than 280 characters including the '#Tomato', as that is the maximum length of a tweet.
  
  
- ## Approach
- - Appending text onto the end of the string is simple enough to do with React. The first criteria for this was to make the output dynamic and instantaneous as the user types in the input
- - This is handled by a hook and an ```onChange``` attribute included in the textarea element. Once a change is detected, a ```handleChange``` function is triggered which sets the state of the tweet to the value of the textarea element. 
- - Since a delay was requested (randomly generated between 0.5 - 2.5s) as part of the AC, I have included a function which generates a random number (2dp) between the request bounds and is used as a delay:
- ```
- const delay = () => {
-    return parseFloat((Math.random() * 2000 + 500).toFixed(2));
-  };
-  ```
-  
-  - 
